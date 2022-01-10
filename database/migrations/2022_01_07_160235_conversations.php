@@ -17,12 +17,12 @@ class Conversations extends Migration
             $table->id();
             $table->text('message');
             $table->foreignId('from')
-                ->constrained('users')
+                ->constrained('employees')
                 ->onDelete('cascade');
             $table->foreignId('sent')
-            ->constrained('users')
+            ->constrained('contacts')
             ->onDelete('cascade');
-            $table->timestamp();
+            $table->timestamps();
         });
     }
 

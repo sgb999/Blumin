@@ -14,8 +14,7 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->unique->numberBetween(1,100),
-            'name' => $this->faker->unique->name(),
+            'user_id' => $this->faker->unique->numberBetween(101,401),
             'job_role' => $this->faker->jobTitle(),
             'phone_number' => $this->faker->unique->phoneNumber()
         ];

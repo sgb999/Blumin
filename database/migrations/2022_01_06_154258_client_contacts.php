@@ -14,12 +14,14 @@ class ClientContacts extends Migration
     public function up()
     {
         Schema::create('client_contacts', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('client_id')
                 ->constrained('clients')
                 ->onDelete('cascade');
             $table->foreignId('contact_id')
                 ->constrained('contacts')
                 ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
