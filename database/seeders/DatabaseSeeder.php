@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use \App\Models\User;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         User::factory(100)->create();
+        $this->call([
+            UserSeeder::class,
+            ClientSeeder::class,
+            ContactSeeder::class,
+            EmployeeSeeder::class,
+            ClientContactseeder::class
+        ]);
     }
 }

@@ -18,9 +18,9 @@ class Contacts extends Migration
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
-            $table->string('name', 255);
             $table->string('job_role', 255);
-            $table->string('phone_number', 11);
+            $table->string('phone_number', 30);
+            $table->timestamps();
         });
     }
 

@@ -18,10 +18,10 @@ class Clients extends Migration
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
-            $table->string('name', 255);
             $table->text('address');
-            $table->string('post_code', 8);
-            $table->string('contact_number', 11);
+            $table->string('post_code', 14);
+            $table->string('contact_number', 30);
+            $table->timestamps();
         });
     }
 

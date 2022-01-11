@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Contact;
+use App\Models\Conversation;
 use Illuminate\Database\Seeder;
 
-class ContactSeeder extends Seeder
+class ConversationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ContactSeeder extends Seeder
      */
     public function run()
     {
-        Contact::factory(300)->create();
+        Conversation::factory(100)->create();
     }
 }

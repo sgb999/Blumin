@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <nav>
-
-    </nav>
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet"/>
+    @component('general.layout.title')
+        {{ $page_title }}
+    @endcomponent
+</head>

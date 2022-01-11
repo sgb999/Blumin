@@ -16,7 +16,6 @@ class ClientFactory extends Factory
     {
         return [
             'user_id' => $this->faker->unique->numberBetween(1,100),
-            'name' => $this->faker->name(),
             'address' => $this->faker->unique->address(),
             'post_code' => $this->faker->postcode(),
             'contact_number' => $this->faker->unique->phoneNumber()

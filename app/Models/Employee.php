@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 
 class Employee extends Model
 {
@@ -15,8 +17,13 @@ class Employee extends Model
         'job_role'
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
+
+    /**public function client(): HasOneOrMany
+    {
+        return $this->hasMany(ClientContacts::class);
+    }*/
 }
