@@ -9,11 +9,11 @@
         <p>Post Code: {{ $clients->first()->client()->first()->post_code }}</p>
         <p>Contact Number: {{ $clients->first()->client()->first()->contact_number }}</p>
         <p>Last updated: {{ $clients->first()->client()->first()->updated_at }}</p>
-        <a href="/manage-client/{{ $clients->first()->client()->first()->id }}"><button>Manage Client</button></a>
+        <a class="btn btn-primary" href="/manage-client/{{ $clients->first()->client()->first()->id }}">Manage Client</a>
         @foreach($clients as $client)
             <hr>
             <p> {{$client->contact()->first()->user()->first()->name}}</p>
-            <a href="/view-contact/{{ $client->contact()->first()->id }}"><button>View Contact</button></a>
+            <a class="btn btn-primary" href="/view-contact/{{ $client->contact()->first()->id }}">View Contact</a>
         @endforeach
     </div>
 </body>
