@@ -44,17 +44,18 @@ class ClientController extends Controller
         return view('admin.pages.view-client', compact(['page_title']));
     }
 
-    public function viewClients($id)
+    public function viewClients($date)
     {
-        $client = DB::table('clients')
-                ->join('users', 'users.id', '=', 'clients.user_id')
-                ->select('clients.id', 'users.name', 'users.email', 'clients.post_code', 'clients.contact_number')
-                ->where('clients.id', '>', $id)
-                ->limit(20)
-                ->orderBy('clients.updated_at', 'DESC')
-                ->get();
-
-        return json_encode($client);
+        if($date == 0) {
+            $date = Carbon::now();
+        }
+        $clients = Client::with('user:id,name,email')
+                            ->select('id', 'post_code', 'contact_number', 'updated_at', 'user_id')
+                            ->where('updated_at', '<', $date)
+                            ->orderBy('updated_at', 'DESC')
+                            ->limit(20)
+                            ->get();
+        return json_encode($clients);
     }
 
     public function manageClient($id, Request $request)
@@ -122,10 +123,10 @@ class ClientController extends Controller
     public function viewClient($id)
     {
         $clients = ClientContact::where('client_id', '=', $id)
-            ->with('client', 'contact')
             ->distinct()
             ->get();
         $page_title = "Fictitious Limited - View Client";
+
         return view('admin.pages.view-specific-client', compact(['page_title', 'clients']));
     }
 }

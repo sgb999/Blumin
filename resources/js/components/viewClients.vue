@@ -12,8 +12,8 @@
             <tbody>
                 <tr v-if="clients"
                     v-for="client in clients">
-                    <th scope="row">{{ client.name}}</th>
-                    <td>{{ client.email }}</td>
+                    <th scope="row">{{ client.user.name}}</th>
+                    <td>{{ client.user.email }}</td>
                     <td>{{ client.post_code }}</td>
                     <td>{{ client.contact_number }}</td>
                     <td><a class="btn btn-primary" :href="'/manage-client/' + client.id">Manage Client</a></td>
@@ -40,15 +40,10 @@ export default {
     getClientData(){
         fetch('/view-clients/' + this.id).then((response) => response.text())
             .then((data) => {
-                if(this.clients.length > 1){
-                    for(let i =0; i < JSON.parse(data).length; i++){
-                        this.clients.push(JSON.parse(data)[i]);
-                    }
+                for(let i =0; i < JSON.parse(data).length; i++) {
+                    this.clients.push(JSON.parse(data)[i]);
                 }
-                else{
-                    this.clients = JSON.parse(data);
-                }
-                this.id = this.clients[this.clients.length - 1].id;
+                this.id = this.clients[this.clients.length - 1].updated_at;
             }).catch((error) => {
             console.log('Error: ' + error);
         });
