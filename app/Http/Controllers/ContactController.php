@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\{ClientContact, User, Contact, Client};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -47,14 +48,17 @@ class ContactController extends Controller
         $page_title = "Fictitious Limited - View Contact";
         return view('admin.pages.view-contact', compact(['page_title']));
     }
-    public function viewContacts($id)
+    public function viewContacts($date)
     {
-        $contacts = DB::table('contacts')
-            ->join('users', 'users.id', '=', 'contacts.user_id')
-            ->select('contacts.id', 'users.name', 'users.email', 'contacts.job_role', 'contacts.phone_number')
-            ->where('contacts.id', '>', $id)
-            ->limit(20)
-            ->get();
+        if($date == 0) {
+            $date = Carbon::now();
+        }
+        $contacts = Contact::with(['user:id,name,email'])
+                            ->select('id', 'job_role', 'phone_number', 'updated_at', 'user_id')
+                            ->where('updated_at', '<', $date)
+                            ->orderBy('updated_at', 'DESC')
+                            ->limit(20)
+                            ->get();
 
         return json_encode($contacts);
     }
@@ -103,12 +107,11 @@ class ContactController extends Controller
                 return redirect()->route('view-contacts');
             }
         }
-        $contact = Contact::where('id', '=', $id)->with('user')->first();
+        $contact = Contact::where('id', '=', $id)->first();
         $clientContact = ClientContact::where('contact_id', '=', $id)
-            ->with('client')
-            ->distinct()
+            ->distinct() // only needed due to fake data
             ->first();
-        $clients = Client::with('user')->get();
+        $clients = Client::all();
         $page_title = "Fictitious Limited - Manage Contact";
         return view('admin.pages.manage-contact', compact(['page_title', 'contact', 'clientContact', 'clients']));
     }
@@ -116,6 +119,7 @@ class ContactController extends Controller
     {
         $contact = Contact::where('id', '=', $id)->first();
         $page_title = "Fictitious Limited - Manage Contact";
+
         return view('admin.pages.view-specific-contact', compact(['page_title', 'contact']));
     }
 }

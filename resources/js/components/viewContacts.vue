@@ -12,8 +12,8 @@
             <tbody>
             <tr v-if="contacts"
                 v-for="contact in contacts">
-                <th scope="row">{{ contact.name}}</th>
-                <td>{{ contact.email }}</td>
+                <th scope="row">{{ contact.user.name}}</th>
+                <td>{{ contact.user.email }}</td>
                 <td>{{ contact.job_role }}</td>
                 <td>{{ contact.phone_number }}</td>
                 <td><a class="btn btn-primary" :href="'/manage-contact/' + contact.id">Manage contact</a></td>
@@ -41,15 +41,10 @@ export default {
         getContactData() {
             fetch('/view-contacts/' + this.id).then((response) => response.text())
             .then((data) => {
-                if(this.contacts.length > 1){
-                    for(let i =0; i < JSON.parse(data).length; i++){
-                        this.contacts.push(JSON.parse(data)[i]);
-                    }
+                for(let i =0; i < JSON.parse(data).length; i++){
+                    this.contacts.push(JSON.parse(data)[i]);
                 }
-                else{
-                    this.contacts = JSON.parse(data);
-                }
-                this.id = this.contacts[this.contacts.length - 1].id;
+                this.id = this.contacts[this.contacts.length - 1].updated_at;
             }).catch((error) => {
             console.log('Error: ' + error);
             });
